@@ -1,6 +1,9 @@
 # Import the math package
 import math
 
+# Import radians function of math package
+from math import radians
+
 # Definition of radius
 r = 0.43
 
@@ -16,8 +19,6 @@ print("Area: " + str(A))
 
 # Definition of radius
 r = 192500
-
-from math import radians
 
 # Travel distance of Moon over 12 degrees. Store in dist.
 dist = r*radians(12)
