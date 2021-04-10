@@ -39,7 +39,7 @@ print(action_scifi.head())
 scifi_only = action_scifi[action_scifi['genre_act'].isnull()]
 
 # Merge the movies and scifi_only tables with an inner join
-movies_and_scifi_only = movies.merge(scifi_only, how='inner',                               left_on='id', right_on='movie_id')
+movies_and_scifi_only = movies.merge(scifi_only, how='inner', left_on='id', right_on='movie_id')
 
 # Print the first few rows and shape of movies_and_scifi_only
 print(movies_and_scifi_only.head())
@@ -51,17 +51,14 @@ genres_movies = movie_to_genres.merge(pop_movies, how='right',
                                       right_on='id')
 
 # Count the number of genres
-genre_count = genres_movies.groupby('genre').agg({'id':'count'})
+genre_count = genres_movies.groupby('genre').agg({'id': 'count'})
 
 # Plot a bar chart of the genre_count
 genre_count.plot(kind='bar')
 plt.show()
 
 # Merge iron_1_actors to iron_2_actors on id with outer join using suffixes
-iron_1_and_2 = iron_1_actors.merge(iron_2_actors,
-                                     how='outer',
-                                     on='id',
-                                     suffixes=('_1', '_2'))
+iron_1_and_2 = iron_1_actors.merge(iron_2_actors, how='outer', on='id', suffixes=('_1', '_2'))
 
 # Create an index that returns true if name_1 or name_2 are null
 m = ((iron_1_and_2['name_1'].isnull()) |
@@ -71,12 +68,12 @@ m = ((iron_1_and_2['name_1'].isnull()) |
 print(iron_1_and_2[m].head())
 
 # Merge the crews table to itself
-crews_self_merged = crews.merge(crews, on='id', how='inner',
-                            suffixes=('_dir', '_crew'))
+crews_self_merged = crews.merge(crews, on='id', how='inner', suffixes=('_dir', '_crew'))
 
 # Create a Boolean index to select the appropriate
 boolean_filter = ((crews_self_merged['job_dir'] == 'Director') &
-     (crews_self_merged['job_crew'] != 'Director'))
+                  (crews_self_merged['job_crew'] != 'Director'))
+
 direct_crews = crews_self_merged[boolean_filter]
 
 # Print the first few rows of direct_crews
@@ -94,13 +91,13 @@ sequels_fin = sequels.merge(financials, on='id', how='left')
 # Self merge with suffixes as inner join with left on sequel and right on id
 orig_seq = sequels_fin.merge(sequels_fin, how='inner', left_on='sequel',
                              right_on='id', right_index=True,
-                             suffixes=('_org','_seq'))
+                             suffixes=('_org', '_seq'))
 
 # Add calculation to subtract revenue_org from revenue_seq
 orig_seq['diff'] = orig_seq['revenue_seq'] - orig_seq['revenue_org']
 
 # Select the title_org, title_seq, and diff
-titles_diff = orig_seq[['title_org','title_seq','diff']]
+titles_diff = orig_seq[['title_org', 'title_seq', 'diff']]
 
 # Print the first rows of the sorted titles_diff
 print(titles_diff.sort_values('diff', ascending=False).head())

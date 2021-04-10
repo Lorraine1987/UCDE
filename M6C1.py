@@ -82,7 +82,8 @@ land_cen_lic = land_use.merge(census, on='ward')\
                                    as_index=False).agg({'account':'count'})
 
 # Sort pop_vac_lic and print the results
-sorted_pop_vac_lic = pop_vac_lic.sort_values(['vacant', 'account',                   'pop_2010'], ascending=[False, True, True])
+sorted_pop_vac_lic = pop_vac_lic.sort_values(['vacant', 'account', 'pop_2010'],
+                                ascending=[False, True, True])
 
 # Print the top few rows of sorted_pop_vac_lic
 print(sorted_pop_vac_lic.head())
